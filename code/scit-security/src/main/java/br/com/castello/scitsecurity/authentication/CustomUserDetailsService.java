@@ -1,0 +1,23 @@
+package br.com.castello.scitsecurity.authentication;
+
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
+@Service
+public class CustomUserDetailsService implements UserDetailsService {
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        if ("ben".equals(username)) {
+            return User.builder()
+                    .username("ben")
+                    .password("{noop}password") // {noop} indicates no password encoder for simplicity.
+                    .roles("USER")
+                    .build();
+        } else {
+            throw new UsernameNotFoundException("User not found");
+        }
+    }
+}
